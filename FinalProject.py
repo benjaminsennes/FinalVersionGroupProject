@@ -26,9 +26,9 @@ construction_multiplier = {"Bogdan Constructors": 1.1, "Steffen Constructors": 0
 worker_multiplier = {2: 0.95, 4: 1.03, 6: 1.09, 8: 1.00}
 
 design_multiplier = {
-    "Apartment": {"Contemporary": 1.03, "Bohemian": 1.00, "Vintage": 1.09},
+    "Apartment": {"Zaha Hadid": 1.03, "Norman Foster": 1.00, "Bjarke Ingels": 1.09},
 
-    "House": {"Stone": 1.07, "Wood": 1.04, "Modern": 1.00},
+    "House": {"Zaha Hadid": 1.07, "Norman Foster": 1.04, "Bjarke Ingels": 1.00},
                         }
 bank_interest = {"BBVA": 0.03, "Santander": 0.05}
 
@@ -84,13 +84,13 @@ investment_var = tk.StringVar(value="2500000")
 material_var = tk.StringVar(value="Modern")
 
 options = [
-    ("Choose a city:", city_var, list(city_data.keys())),
-    ("Choose location:", location_var, list(location_multiplier.keys())),
-    ("Choose property type:", property_type_var, list(property_multiplier.keys())),
-    ("Choose construction company:", company_var, list(construction_multiplier.keys())),
+    ("Choose a City:", city_var, list(city_data.keys())),
+    ("Choose Location:", location_var, list(location_multiplier.keys())),
+    ("Choose Property Type:", property_type_var, list(property_multiplier.keys())),
+    ("Choose Construction company:", company_var, list(construction_multiplier.keys())),
     ("Number of Workers:", workers_var, ["2", "4", "6", "8"]),
     ("Choose a bank:", bank_var, list(bank_interest.keys())),
-    ("Choose investment amount:", investment_var, ["1000000", "2500000", "5000000"]),
+    ("Choose Investment Amount:", investment_var, ["1000000", "2500000", "5000000"]),
 ]
 
 for i, (text, var, choices) in enumerate(options):
@@ -98,20 +98,20 @@ for i, (text, var, choices) in enumerate(options):
     ttk.Combobox(root, textvariable=var, values=choices, state="readonly").grid(row=i, column=1, padx=10, pady=5)
 
 # Material selection updates based on property type
-material_options = {
-    "Apartment": ["Modern", "Vintage", "Countryside"],
-    "House": ["Stone", "Wood", "Concrete"],
-}
+designer_options = {
+    "Apartment": ["Zaha Hadid", "Norman Foster" ,"Bjarke Ingels" ],
+    "House": ["Zaha Hadid", "Norman Foster" ,"Bjarke Ingels"],
+                    }
 
 def update_material_options(*args):
     selected_type = property_type_var.get()
-    material_var.set(material_options[selected_type][0])
-    material_dropdown["values"] = material_options[selected_type]
+    material_var.set(designer_options[selected_type][0])
+    material_dropdown["values"] = designer_options[selected_type]
 
 property_type_var.trace("w", update_material_options)
 
-ttk.Label(root, text="Choose material:").grid(row=len(options), column=0, padx=10, pady=5, sticky='w')
-material_dropdown = ttk.Combobox(root, textvariable=material_var, values=material_options["Apartment"], state="readonly")
+ttk.Label(root, text="Choose Designer:").grid(row=len(options), column=0, padx=10, pady=5, sticky='w')
+material_dropdown = ttk.Combobox(root, textvariable=material_var, values=designer_options["Apartment"], state="readonly")
 material_dropdown.grid(row=len(options), column=1, padx=10, pady=5)
 
 ttk.Button(root, text="Simulate Investment", command=calculate_roi).grid(row=len(options) + 1, columnspan=2, pady=10)
