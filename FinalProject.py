@@ -6,24 +6,33 @@ import numpy as np
 # Data for cities, appreciation rates, and multipliers
 city_data = {
     "Madrid": {1000000: 0.04, 2500000: 0.05, 5000000: 0.06},
+
     "Barcelona": {1000000: 0.03, 2500000: 0.04, 5000000: 0.05},
+
     "Seville": {1000000: 0.035, 2500000: 0.045, 5000000: 0.055},
+
     "San Sebastian": {1000000: 0.045, 2500000: 0.055, 5000000: 0.065},
+
     "Marbella": {1000000: 0.06, 2500000: 0.07, 5000000: 0.08},
-}
+             }
 
 location_multiplier = {"Center": 1.09, "Suburb": 1.08}
+
 property_multiplier = {
     "Apartment": {"Center": 1.09, "Suburb": 0.96},
     "House": {"Center": 0.96, "Suburb": 1.08},
-}
+                        }
 construction_multiplier = {"Bogdan Constructors": 1.1, "Steffen Constructors": 0.95}
+
 worker_multiplier = {2: 0.95, 4: 1.03, 6: 1.09, 8: 1.00}
+
 material_multiplier = {
     "Apartment": {"Modern": 1.03, "Vintage": 1.00, "Countryside": 1.09},
+
     "House": {"Stone": 1.07, "Wood": 1.04, "Concrete": 1.00},
-}
+                        }
 bank_interest = {"BBVA": 0.03, "Santander": 0.05}
+
 investment_options = [1000000, 2500000, 5000000]
 
 REQUIRED_ROI = 50  # Minimum required ROI to be hired
@@ -61,6 +70,7 @@ def calculate_roi():
     plt.legend()
     plt.grid()
     plt.show()
+
 
 # GUI Setup
 root = tk.Tk()
