@@ -41,14 +41,14 @@ def calculate_roi():
     location = location_var.get()
     property_type = property_type_var.get()
     company = company_var.get()
-    workers = int(workers_var.get())
+    workers = int(workers_var.get())  # use the int() to convert string to int
     bank = bank_var.get()
-    investment = int(investment_var.get())
-    material = material_var.get()
+    investment = int(investment_var.get())  # same for this one
+    designer = designer_var.get()
 
     appreciation_rate = city_data[city][investment] * location_multiplier[location] * \
                         property_multiplier[property_type][location] * construction_multiplier[company] * \
-                        worker_multiplier[workers] * design_multiplier[property_type][material]
+                        worker_multiplier[workers] * design_multiplier[property_type][designer]
 
     interest_rate = bank_interest[bank]
     down_payment = investment * 0.2
@@ -58,17 +58,21 @@ def calculate_roi():
     final_value = investment * (1 + appreciation_rate) ** 3
     roi = ((final_value - total_cost) / down_payment) * 100
 
-    # Plot results
+    plot_roi(roi) # call the graph function
+
+
+def plot_roi(roi):
+    """ Function to plot the ROI """
     plt.figure(figsize=(7, 5))
     plt.bar(["Your Investment"], [roi], color="blue", label="Your Investment")
-    plt.axhline(y=REQUIRED_ROI, color="black", linestyle="--", label="Required ROI")  # Keep only the line
-
+    plt.axhline(y=REQUIRED_ROI, color="black", linestyle="--", label="Required ROI")  # Minimum required ROI line
     plt.xlabel("Investment")
     plt.ylabel("ROI (%)")
     plt.title("Investment Return")
     plt.legend()
     plt.grid()
     plt.show()
+
 
 # Graphical User Interfaces Setup
 root = tk.Tk()
@@ -81,7 +85,7 @@ company_var = tk.StringVar(value="Bogdan Constructors")
 workers_var = tk.StringVar(value="4")
 bank_var = tk.StringVar(value="BBVA")
 investment_var = tk.StringVar(value="2500000")
-material_var = tk.StringVar(value="Modern")
+designer_var = tk.StringVar(value="Zaha Hadid")
 
 options = [
     ("Choose a City:", city_var, list(city_data.keys())),
@@ -105,13 +109,13 @@ designer_options = {
 
 def update_material_options(*args):
     selected_type = property_type_var.get()
-    material_var.set(designer_options[selected_type][0])
+    designer_var.set(designer_options[selected_type][0])
     material_dropdown["values"] = designer_options[selected_type]
 
 property_type_var.trace("w", update_material_options)
 
 ttk.Label(root, text="Choose Designer:").grid(row=len(options), column=0, padx=10, pady=5, sticky='w')
-material_dropdown = ttk.Combobox(root, textvariable=material_var, values=designer_options["Apartment"], state="readonly")
+material_dropdown = ttk.Combobox(root, textvariable=designer_var, values=designer_options["Apartment"], state="readonly")
 material_dropdown.grid(row=len(options), column=1, padx=10, pady=5)
 
 ttk.Button(root, text="Simulate Investment", command=calculate_roi).grid(row=len(options) + 1, columnspan=2, pady=10)
