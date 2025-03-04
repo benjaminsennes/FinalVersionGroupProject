@@ -1,9 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import matplotlib.pyplot as plt
-import numpy as np
 
-# Data for cities, appreciation rates, and multipliers
+# Datas required to do the simulation
 city_data = {
     "Madrid": {1000000: 0.04, 2500000: 0.05, 5000000: 0.06},
 
@@ -26,16 +25,16 @@ construction_multiplier = {"Bogdan Constructors": 1.1, "Steffen Constructors": 0
 
 worker_multiplier = {2: 0.95, 4: 1.03, 6: 1.09, 8: 1.00}
 
-material_multiplier = {
-    "Apartment": {"Modern": 1.03, "Vintage": 1.00, "Countryside": 1.09},
+design_multiplier = {
+    "Apartment": {"Contemporary": 1.03, "Bohemian": 1.00, "Vintage": 1.09},
 
-    "House": {"Stone": 1.07, "Wood": 1.04, "Concrete": 1.00},
+    "House": {"Stone": 1.07, "Wood": 1.04, "Modern": 1.00},
                         }
 bank_interest = {"BBVA": 0.03, "Santander": 0.05}
 
 investment_options = [1000000, 2500000, 5000000]
 
-REQUIRED_ROI = 50  # Minimum required ROI to be hired
+REQUIRED_ROI = 50  # min ROI required
 
 def calculate_roi():
     city = city_var.get()
@@ -49,14 +48,14 @@ def calculate_roi():
 
     appreciation_rate = city_data[city][investment] * location_multiplier[location] * \
                         property_multiplier[property_type][location] * construction_multiplier[company] * \
-                        worker_multiplier[workers] * material_multiplier[property_type][material]
+                        worker_multiplier[workers] * design_multiplier[property_type][material]
 
     interest_rate = bank_interest[bank]
     down_payment = investment * 0.2
     total_loan = investment * 0.8
 
-    total_cost = down_payment + (total_loan * (1 + interest_rate * 4))
-    final_value = investment * (1 + appreciation_rate) ** 4
+    total_cost = down_payment + (total_loan * (1 + interest_rate * 3))
+    final_value = investment * (1 + appreciation_rate) ** 3
     roi = ((final_value - total_cost) / down_payment) * 100
 
     # Plot results
@@ -71,8 +70,7 @@ def calculate_roi():
     plt.grid()
     plt.show()
 
-
-# GUI Setup
+# Graphical User Interfaces Setup
 root = tk.Tk()
 root.title("Real Estate Investment Simulator")
 
