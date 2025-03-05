@@ -63,9 +63,8 @@ def calculate_roi():
 
 def plot_roi(roi):
     """ Function to plot the ROI """
-    plt.figure(figsize=(7, 5))
-    plt.bar(["Your Investment"], [roi], color="blue", label="Your Investment")
-    plt.axhline(y=REQUIRED_ROI, color="black", linestyle="--", label="Required ROI")  # Minimum required ROI line
+    plt.bar(["Your Investment"], [roi], color="grey", label="Your Investment")
+    plt.axhline(y=REQUIRED_ROI, color="red", linestyle="--", label="Required ROI")  # min ROI (50%) represented by a line
     plt.xlabel("Investment")
     plt.ylabel("ROI (%)")
     plt.title("Investment Return")
@@ -74,7 +73,7 @@ def plot_roi(roi):
     plt.show()
 
 
-# Graphical User Interfaces Setup
+# Graphical User Interface Setup
 root = tk.Tk()
 root.title("Real Estate Investment Simulator")
 
@@ -91,33 +90,21 @@ options = [
     ("Choose a City:", city_var, list(city_data.keys())),
     ("Choose Location:", location_var, list(location_multiplier.keys())),
     ("Choose Property Type:", property_type_var, list(property_multiplier.keys())),
-    ("Choose Construction company:", company_var, list(construction_multiplier.keys())),
+    ("Choose Construction Company:", company_var, list(construction_multiplier.keys())),
     ("Number of Workers:", workers_var, ["2", "4", "6", "8"]),
-    ("Choose a bank:", bank_var, list(bank_interest.keys())),
+    ("Choose a Bank:", bank_var, list(bank_interest.keys())),
     ("Choose Investment Amount:", investment_var, ["1000000", "2500000", "5000000"]),
+    ("Choose a Designer:", designer_var, ["Zaha Hadid", "Norman Foster", "Bjarke Ingels"]),
 ]
 
 for i, (text, var, choices) in enumerate(options):
-    ttk.Label(root, text=text).grid(row=i, column=0, padx=10, pady=5, sticky='w')
-    ttk.Combobox(root, textvariable=var, values=choices, state="readonly").grid(row=i, column=1, padx=10, pady=5)
+    ttk.Label(root, text=text).grid(row=i, column=0, padx=250, pady=35)
+    ttk.Combobox(root, textvariable=var, values=choices, state="readonly").grid(row=i, column=1, padx=5, pady=10)
 
-# Material selection updates based on property type
-designer_options = {
-    "Apartment": ["Zaha Hadid", "Norman Foster" ,"Bjarke Ingels" ],
-    "House": ["Zaha Hadid", "Norman Foster" ,"Bjarke Ingels"],
-                    }
-
-def update_material_options(*args):
-    selected_type = property_type_var.get()
-    designer_var.set(designer_options[selected_type][0])
-    material_dropdown["values"] = designer_options[selected_type]
-
-property_type_var.trace("w", update_material_options)
-
-ttk.Label(root, text="Choose Designer:").grid(row=len(options), column=0, padx=10, pady=5, sticky='w')
-material_dropdown = ttk.Combobox(root, textvariable=designer_var, values=designer_options["Apartment"], state="readonly")
-material_dropdown.grid(row=len(options), column=1, padx=10, pady=5)
-
+# create the button to simulate investment
 ttk.Button(root, text="Simulate Investment", command=calculate_roi).grid(row=len(options) + 1, columnspan=2, pady=10)
 
 root.mainloop()
+
+
+
