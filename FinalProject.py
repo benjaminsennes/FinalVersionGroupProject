@@ -37,6 +37,11 @@ investment_options = [1000000, 2500000, 5000000]
 REQUIRED_ROI = 50  # min ROI required
 
 def calculate_roi():
+    """
+    Function that calculates the Return on Investment
+    :param:city, loc, prop type, construct company, nb of workers, bank, invest amount, designer
+    :return: Return on Investment (%)
+    """
     city = city_var.get()
     location = location_var.get()
     property_type = property_type_var.get()
@@ -62,7 +67,10 @@ def calculate_roi():
 
 
 def plot_roi(roi):
-    """ Function to plot the ROI """
+    """
+    Function to plot the ROI
+    :return: a grey bar chart with a dotted red line representing the minimum ROI required
+    """
     plt.bar(["Your Investment"], [roi], color="grey", label="Your Investment")
     plt.axhline(y=REQUIRED_ROI, color="red", linestyle="--", label="Required ROI")  # min ROI (50%) represented by a line
     plt.xlabel("Investment")
